@@ -76,12 +76,12 @@ if (!$app) {
                 </div>
             </div>
             
-            <div class="review-actions" style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+            <div class="review-actions" style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
                 <?php if (!empty($app['play_store_link'])): ?>
-                    <a href="<?= htmlspecialchars($app['play_store_link']) ?>" target="_blank" class="btn btn-outline"><i class='bx bxl-play-store'></i> Read More on Google Play <span id="play_count_badge" style="font-weight: bold; margin-left: 5px;"></span></a>
+                    <a href="<?= htmlspecialchars($app['play_store_link']) ?>" target="_blank" class="btn btn-outline" style="flex: 1 1 250px; justify-content: center; text-align: center;"><i class='bx bxl-play-store'></i> Read More on Google Play <span id="play_count_badge" style="font-weight: bold; margin-left: 5px;"></span></a>
                 <?php endif; ?>
                 <?php if (!empty($app['indus_store_link'])): ?>
-                    <a href="<?= htmlspecialchars($app['indus_store_link']) ?>" target="_blank" class="btn btn-outline"><i class='bx bxs-store'></i> Read More on Indus App Store <span id="indus_count_badge" style="font-weight: bold; margin-left: 5px;"></span></a>
+                    <a href="<?= htmlspecialchars($app['indus_store_link']) ?>" target="_blank" class="btn btn-outline" style="flex: 1 1 250px; justify-content: center; text-align: center;"><i class='bx bxs-store'></i> Read More on Indus App Store <span id="indus_count_badge" style="font-weight: bold; margin-left: 5px;"></span></a>
                 <?php endif; ?>
             </div>
         </div>
