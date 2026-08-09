@@ -32,6 +32,8 @@ try {
     }
 
     $reviews = [];
+    $play_store_count = 0;
+    $indus_store_count = 0;
 
     // Helper function to fetch URL with a reasonable timeout and User-Agent
     function fetch_url($url) {
@@ -65,6 +67,7 @@ try {
             if ($json_response) {
                 $api_data = json_decode($json_response, true);
                 if (isset($api_data['success']) && $api_data['success'] && !empty($api_data['data'])) {
+                    $play_store_count = count($api_data['data']);
                     foreach ($api_data['data'] as $r) {
                         $reviews[] = [
                             'reviewer_name' => htmlspecialchars($r['userName'] ?? 'Unknown'),
@@ -88,6 +91,7 @@ try {
         if ($json_response) {
             $api_data = json_decode($json_response, true);
             if (isset($api_data['success']) && $api_data['success'] && !empty($api_data['data'])) {
+                $indus_store_count = count($api_data['data']);
                 foreach ($api_data['data'] as $r) {
                     $reviews[] = [
                         'reviewer_name' => htmlspecialchars($r['userName'] ?? 'Unknown'),
@@ -102,7 +106,20 @@ try {
         }
     }
 
-    $json_output = json_encode(['success' => true, 'reviews' => $reviews]);
+    // Sort reviews by rating (highest first)
+    usort($reviews, function($a, $b) {
+        return $b['rating'] <=> $a['rating'];
+    });
+
+    // Get top 25 reviews
+    $top_reviews = array_slice($reviews, 0, 25);
+
+    $json_output = json_encode([
+        'success' => true, 
+        'reviews' => $top_reviews,
+        'play_store_count' => $play_store_count,
+        'indus_store_count' => $indus_store_count
+    ]);
     
     // Save the new data into the cache
     $update_stmt = $pdo->prepare("UPDATE apps SET cached_reviews = :cache, reviews_updated_at = NOW() WHERE id = :id");
