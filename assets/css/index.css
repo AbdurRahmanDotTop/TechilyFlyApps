@@ -25,7 +25,7 @@
     --font-main: 'Outfit', sans-serif;
     
     /* Layout */
-    --container-width: 1440px;
+    --container-width: 95%;
     --border-radius: 16px;
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
@@ -67,7 +67,8 @@ ul {
 
 /* Container */
 .container {
-    width: clamp(320px, 95%, var(--container-width));
+    width: var(--container-width);
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 clamp(15px, 3vw, 30px);
 }
