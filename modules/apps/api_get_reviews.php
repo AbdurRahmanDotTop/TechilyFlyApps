@@ -31,6 +31,9 @@ try {
         }
     }
 
+    // Increase max execution time for scraping
+    set_time_limit(120);
+
     $reviews = [];
     $play_store_count = 0;
     $indus_store_count = 0;
@@ -43,7 +46,7 @@ try {
                 'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36\r\n" .
                             "Accept-Language: en-US,en;q=0.9\r\n" .
                             "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n",
-                'timeout' => 5
+                'timeout' => 60
             ]
         ];
         $context = stream_context_create($options);
