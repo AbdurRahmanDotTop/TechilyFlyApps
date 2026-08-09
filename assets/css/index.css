@@ -287,6 +287,20 @@ ul {
     align-items: center;
     gap: clamp(15px, 2vw, 20px);
     margin-bottom: clamp(15px, 2vw, 20px);
+    padding-right: 70px; /* Prevents text from overlapping the Featured badge */
+}
+
+/* Icon Button (Download) */
+.btn-icon {
+    padding: 0 !important;
+    width: clamp(42px, 5vh, 48px);
+    height: clamp(42px, 5vh, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    flex-shrink: 0;
+    font-size: 1.3rem;
 }
 
 .app-logo {

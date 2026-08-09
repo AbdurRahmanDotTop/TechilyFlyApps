@@ -50,7 +50,7 @@ $services = get_all_services($pdo);
                         
                         <div style="display: flex; gap: 10px;">
                             <a href="<?= BASE_URL ?>modules/apps/details.php/<?= $app['slug'] ?>" class="btn btn-outline" style="flex: 1; text-align: center; padding: 10px;">View Details</a>
-                            <a href="<?= htmlspecialchars($app['apk_download_link'] ?? '#') ?>" class="btn btn-primary" style="padding: 10px 15px;" target="_blank"><i class='bx bxs-download'></i></a>
+                            <a href="<?= htmlspecialchars($app['apk_download_link'] ?? '#') ?>" class="btn btn-primary btn-icon" title="Download APK" target="_blank"><i class='bx bxs-download'></i></a>
                         </div>
                     </div>
                 <?php endforeach; ?>
