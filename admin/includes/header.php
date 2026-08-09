@@ -19,7 +19,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Techily Fly Apps</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css?v=<?= filemtime(__DIR__ . '/../../assets/css/index.css') ?>">
     <style>
         .admin-layout { display: flex; min-height: 100vh; position: relative; }
         .sidebar { width: 250px; background: var(--bg-secondary); border-right: 1px solid var(--glass-border); padding: 20px; transition: transform var(--transition-normal); z-index: 1000; }

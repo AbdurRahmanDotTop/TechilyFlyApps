@@ -18,7 +18,7 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
     <!-- Boxicons for Icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Main CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/index.css?v=<?= filemtime(__DIR__ . '/../assets/css/index.css') ?>">
 </head>
 <body>
 
