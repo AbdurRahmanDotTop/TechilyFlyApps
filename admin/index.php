@@ -2,7 +2,7 @@
 // admin/index.php
 require_once __DIR__ . '/includes/header.php';
 
-require_once __DIR__ . '/../../includes/helpers/functions.php';
+require_once __DIR__ . '/../includes/helpers/functions.php';
 
 // Quick stats queries
 $total_apps = $pdo->query("SELECT COUNT(*) FROM apps")->fetchColumn();
