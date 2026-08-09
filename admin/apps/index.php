@@ -1,6 +1,7 @@
 <?php
 // admin/apps/index.php
 require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../../includes/helpers/functions.php';
 
 $apps = $pdo->query("SELECT a.*, c.name as category_name FROM apps a LEFT JOIN app_categories c ON a.category_id = c.id ORDER BY a.created_at DESC")->fetchAll();
 ?>
@@ -23,7 +24,9 @@ $apps = $pdo->query("SELECT a.*, c.name as category_name FROM apps a LEFT JOIN a
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($apps as $app): ?>
+            <?php foreach ($apps as $app): 
+                $dynamic_stats = calculate_dynamic_app_stats($app);
+            ?>
                 <tr style="border-bottom: 1px solid var(--glass-border);">
                     <td style="padding: 15px;"><img src="<?= htmlspecialchars($app['logo_url']) ?>" alt="logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;"></td>
                     <td style="padding: 15px; font-weight: 500;"><?= htmlspecialchars($app['name']) ?></td>
@@ -33,7 +36,7 @@ $apps = $pdo->query("SELECT a.*, c.name as category_name FROM apps a LEFT JOIN a
                             <?= ucfirst(htmlspecialchars($app['status'])) ?>
                         </span>
                     </td>
-                    <td style="padding: 15px; color: var(--text-secondary);"><?= number_format($app['downloads']) ?></td>
+                    <td style="padding: 15px; color: var(--text-secondary);"><?= number_format($dynamic_stats['downloads']) ?></td>
                     <td style="padding: 15px; text-align: right;">
                         <a href="<?= BASE_URL ?>admin/apps/duplicate.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;" title="Duplicate"><i class='bx bx-copy'></i></a>
                         <a href="<?= BASE_URL ?>admin/apps/edit.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;" title="Edit"><i class='bx bx-edit'></i></a>
