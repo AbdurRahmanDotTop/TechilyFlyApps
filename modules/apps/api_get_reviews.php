@@ -85,7 +85,7 @@ try {
 
     // Try to scrape Indus App Store using the live Render Playwright API
     if (!empty($app['indus_store_link'])) {
-        $indus_api_url = "https://indus-appstore-api.onrender.com/api/reviews?url=" . urlencode($app['indus_store_link']);
+        $indus_api_url = "https://indus-appstore-api-0wku.onrender.com/api/reviews?url=" . urlencode($app['indus_store_link']);
         $json_response = fetch_url($indus_api_url);
         
         if ($json_response) {
