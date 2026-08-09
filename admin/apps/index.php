@@ -35,8 +35,9 @@ $apps = $pdo->query("SELECT a.*, c.name as category_name FROM apps a LEFT JOIN a
                     </td>
                     <td style="padding: 15px; color: var(--text-secondary);"><?= number_format($app['downloads']) ?></td>
                     <td style="padding: 15px; text-align: right;">
-                        <a href="<?= BASE_URL ?>admin/apps/edit.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;"><i class='bx bx-edit'></i> Edit</a>
-                        <a href="<?= BASE_URL ?>admin/apps/delete.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);" onclick="return confirm('Are you sure you want to delete this app?');"><i class='bx bx-trash'></i></a>
+                        <a href="<?= BASE_URL ?>admin/apps/duplicate.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;" title="Duplicate"><i class='bx bx-copy'></i></a>
+                        <a href="<?= BASE_URL ?>admin/apps/edit.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem;" title="Edit"><i class='bx bx-edit'></i></a>
+                        <a href="<?= BASE_URL ?>admin/apps/delete.php?id=<?= $app['id'] ?>" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.9rem; color: var(--danger); border-color: var(--danger);" onclick="return confirm('Are you sure you want to delete this app?');" title="Delete"><i class='bx bx-trash'></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

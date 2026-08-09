@@ -13,6 +13,10 @@ $categories = $pdo->query("SELECT * FROM app_categories ORDER BY name ASC")->fet
 $error = '';
 $success = '';
 
+if (isset($_GET['duplicated']) && $_GET['duplicated'] == '1') {
+    $success = 'App duplicated successfully! You can now edit the copied version.';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $slug = trim($_POST['slug'] ?? '');
