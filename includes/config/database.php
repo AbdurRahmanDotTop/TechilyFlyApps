@@ -2,27 +2,34 @@
 // includes/config/database.php
 
 // Dynamic Base URL Configuration
+$script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+$script_filename = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
+$doc_root = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT'] ?? '');
 $project_root = str_replace('\\', '/', dirname(dirname(__DIR__)));
-$document_root = rtrim(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '/');
 
-$base_path = str_replace($document_root, '', $project_root);
+$doc_root = rtrim($doc_root, '/');
+$base_path = '';
 
-// Fallback if str_replace failed due to symlinks on shared hosting
-if ($base_path === $project_root) {
-    // We can't rely on str_replace. Let's use SCRIPT_NAME to guess the base path.
-    // If the script is /apps/index.php, and we know it's at the root of the project, base is /apps
-    // If the script is /apps/modules/apps/index.php, we need to strip /modules/apps/index.php
-    $script_name = $_SERVER['SCRIPT_NAME'];
-    $script_filename = str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME']);
+// Method 1: Check if project root is directly under document root (standard setup)
+if (!empty($doc_root) && strpos($project_root, $doc_root) === 0) {
+    $base_path = substr($project_root, strlen($doc_root));
+} else {
+    // Method 2: Resolve symlinks (common on Hostinger/cPanel)
+    $doc_root_real = !empty($doc_root) ? str_replace('\\', '/', realpath($doc_root)) : '';
+    $project_root_real = str_replace('\\', '/', realpath($project_root));
     
-    // We know project_root is the absolute path to the TechilyFlyApps directory.
-    // script_filename is the absolute path to the executed script (e.g. .../TechilyFlyApps/modules/apps/index.php)
-    // The relative path inside the project is:
-    $relative_script_path = str_replace($project_root, '', $script_filename);
-    
-    // So if script_name is /apps/modules/apps/index.php, and relative_script_path is /modules/apps/index.php
-    // We can subtract relative_script_path from script_name to get the base url!
-    $base_path = substr($script_name, 0, strlen($script_name) - strlen($relative_script_path));
+    if (!empty($doc_root_real) && !empty($project_root_real) && strpos($project_root_real, $doc_root_real) === 0) {
+        $base_path = substr($project_root_real, strlen($doc_root_real));
+    } else {
+        // Method 3: Fallback using script execution path
+        $project_root_real = $project_root_real ?: $project_root;
+        $script_filename_real = str_replace('\\', '/', realpath($script_filename)) ?: $script_filename;
+        
+        $relative_script_path = str_ireplace($project_root_real, '', $script_filename_real);
+        if ($relative_script_path !== $script_filename_real) {
+            $base_path = substr($script_name, 0, strlen($script_name) - strlen($relative_script_path));
+        }
+    }
 }
 
 $base_url = rtrim($base_path, '/') . '/';
