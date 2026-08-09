@@ -13,6 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['category_id'] ?? null;
     $developer = trim($_POST['developer'] ?? '');
     $version = trim($_POST['version'] ?? '');
+    $play_store_rating = $_POST['play_store_rating'] ?? 0;
+    $indus_store_rating = $_POST['indus_store_rating'] ?? 0;
+    $play_store_version = trim($_POST['play_store_version'] ?? '');
+    $indus_store_version = trim($_POST['indus_store_version'] ?? '');
+    $play_store_downloads = $_POST['play_store_downloads'] ?? 0;
+    $indus_store_downloads = $_POST['indus_store_downloads'] ?? 0;
     $logo_url = trim($_POST['logo_url'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $requirements = trim($_POST['requirements'] ?? '');
@@ -35,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Name and Slug are required.';
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO apps (category_id, name, slug, developer, version, logo_url, description, requirements, apk_download_link, is_apk_active, play_store_link, is_play_store_active, app_store_link, is_app_store_active, indus_store_link, is_indus_store_active, amazon_store_link, is_amazon_store_active, status, is_featured, publish_date, app_update_date) VALUES (:category_id, :name, :slug, :developer, :version, :logo_url, :description, :requirements, :apk_download_link, :is_apk_active, :play_store_link, :is_play_store_active, :app_store_link, :is_app_store_active, :indus_store_link, :is_indus_store_active, :amazon_store_link, :is_amazon_store_active, :status, :is_featured, :publish_date, :app_update_date)");
+            $stmt = $pdo->prepare("INSERT INTO apps (category_id, name, slug, developer, version, play_store_rating, indus_store_rating, play_store_version, indus_store_version, play_store_downloads, indus_store_downloads, logo_url, description, requirements, apk_download_link, is_apk_active, play_store_link, is_play_store_active, app_store_link, is_app_store_active, indus_store_link, is_indus_store_active, amazon_store_link, is_amazon_store_active, status, is_featured, publish_date, app_update_date) VALUES (:category_id, :name, :slug, :developer, :version, :play_store_rating, :indus_store_rating, :play_store_version, :indus_store_version, :play_store_downloads, :indus_store_downloads, :logo_url, :description, :requirements, :apk_download_link, :is_apk_active, :play_store_link, :is_play_store_active, :app_store_link, :is_app_store_active, :indus_store_link, :is_indus_store_active, :amazon_store_link, :is_amazon_store_active, :status, :is_featured, :publish_date, :app_update_date)");
             
             $stmt->execute([
                 ':category_id' => $category_id,
@@ -43,6 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':slug' => $slug,
                 ':developer' => $developer,
                 ':version' => $version,
+                ':play_store_rating' => $play_store_rating,
+                ':indus_store_rating' => $indus_store_rating,
+                ':play_store_version' => $play_store_version,
+                ':indus_store_version' => $indus_store_version,
+                ':play_store_downloads' => $play_store_downloads,
+                ':indus_store_downloads' => $indus_store_downloads,
                 ':logo_url' => $logo_url,
                 ':description' => $description,
                 ':requirements' => $requirements,
@@ -117,8 +129,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
         <div style="margin-bottom: 15px;">
-            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Version</label>
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Fallback Version</label>
             <input type="text" name="version" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+    </div>
+    
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Play Store Version</label>
+            <input type="text" name="play_store_version" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Indus Store Version</label>
+            <input type="text" name="indus_store_version" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+    </div>
+    
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Play Store Rating</label>
+            <input type="number" step="0.1" name="play_store_rating" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Indus Store Rating</label>
+            <input type="number" step="0.1" name="indus_store_rating" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+    </div>
+    
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Play Store Downloads</label>
+            <input type="number" name="play_store_downloads" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Indus Store Downloads</label>
+            <input type="number" name="indus_store_downloads" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
         </div>
         <div style="margin-bottom: 15px;">
             <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Logo URL</label>
