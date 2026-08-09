@@ -4,6 +4,13 @@ require_once __DIR__ . '/auth.php';
 require_login();
 require_once __DIR__ . '/../../includes/config/database.php';
 $pdo = getDBConnection();
+
+// Get unread messages count
+try {
+    $unread_messages = $pdo->query("SELECT COUNT(*) FROM contact_messages WHERE status = 'unread'")->fetchColumn();
+} catch (PDOException $e) {
+    $unread_messages = 0;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -25,6 +32,8 @@ $pdo = getDBConnection();
         .mobile-header { display: none; padding: 15px 20px; background: var(--bg-secondary); border-bottom: 1px solid var(--glass-border); align-items: center; justify-content: space-between; }
         .mobile-toggle { background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         
+        .badge-unread { background: var(--danger); color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; margin-left: auto; }
+
         @media (max-width: 768px) {
             .sidebar { position: fixed; top: 0; left: 0; height: 100vh; transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
@@ -47,6 +56,14 @@ $pdo = getDBConnection();
             <li><a href="<?= BASE_URL ?>admin/apps/index.php"><i class='bx bx-mobile-alt'></i> Manage Apps</a></li>
             <li><a href="<?= BASE_URL ?>admin/categories/index.php"><i class='bx bx-category'></i> Manage Categories</a></li>
             <li><a href="<?= BASE_URL ?>admin/services/index.php"><i class='bx bx-briefcase'></i> Manage Services</a></li>
+            <li>
+                <a href="<?= BASE_URL ?>admin/messages/index.php">
+                    <i class='bx bx-envelope'></i> Manage Messages 
+                    <?php if ($unread_messages > 0): ?>
+                        <span class="badge-unread"><?= $unread_messages ?></span>
+                    <?php endif; ?>
+                </a>
+            </li>
             <li><a href="<?= BASE_URL ?>admin/settings.php"><i class='bx bx-cog'></i> Website Settings</a></li>
             <li><a href="<?= BASE_URL ?>admin/logout.php"><i class='bx bx-log-out'></i> Logout</a></li>
         </ul>

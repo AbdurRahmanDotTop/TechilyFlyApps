@@ -1,6 +1,33 @@
 <?php
 // contact.php
 require_once __DIR__ . '/templates/header.php';
+
+$success_msg = '';
+$error_msg = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_contact'])) {
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $subject = trim($_POST['subject'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+        $error_msg = 'Please fill out all fields.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_msg = 'Invalid email format.';
+    } else {
+        try {
+            $stmt = $pdo->prepare("INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)");
+            if ($stmt->execute([$name, $email, $subject, $message])) {
+                $success_msg = 'Thank you for reaching out! Your message has been sent successfully.';
+            } else {
+                $error_msg = 'Something went wrong. Please try again later.';
+            }
+        } catch (PDOException $e) {
+            $error_msg = 'Database error: ' . $e->getMessage();
+        }
+    }
+}
 ?>
 
 <section class="section pt-0">
@@ -43,29 +70,41 @@ require_once __DIR__ . '/templates/header.php';
             
             <!-- Contact Form -->
             <div>
-                <form class="app-card" style="padding: 30px;" onsubmit="event.preventDefault(); alert('Thank you for reaching out! We will get back to you soon.'); this.reset();">
+                <?php if ($success_msg): ?>
+                    <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 15px; border-radius: 8px; border: 1px solid var(--success); margin-bottom: 20px;">
+                        <i class='bx bx-check-circle' style="margin-right: 5px;"></i> <?= htmlspecialchars($success_msg) ?>
+                    </div>
+                <?php endif; ?>
+                
+                <?php if ($error_msg): ?>
+                    <div style="background: rgba(239, 68, 68, 0.1); color: var(--danger); padding: 15px; border-radius: 8px; border: 1px solid var(--danger); margin-bottom: 20px;">
+                        <i class='bx bx-error-circle' style="margin-right: 5px;"></i> <?= htmlspecialchars($error_msg) ?>
+                    </div>
+                <?php endif; ?>
+
+                <form class="app-card" style="padding: 30px;" method="POST" action="">
                     <div class="form-grid">
                         <div>
                             <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Your Name</label>
-                            <input type="text" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+                            <input type="text" name="name" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
                         </div>
                         <div>
                             <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Your Email</label>
-                            <input type="email" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+                            <input type="email" name="email" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
                         </div>
                     </div>
                     
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Subject</label>
-                        <input type="text" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
+                        <input type="text" name="subject" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;">
                     </div>
                     
                     <div style="margin-bottom: 20px;">
                         <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Message</label>
-                        <textarea rows="5" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;"></textarea>
+                        <textarea rows="5" name="message" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-primary); color: var(--text-primary); outline: none;"></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary" style="padding: 15px 30px; font-size: 1.1rem; width: 100%;">Send Message</button>
+                    <button type="submit" name="submit_contact" class="btn btn-primary" style="padding: 15px 30px; font-size: 1.1rem; width: 100%;">Send Message</button>
                 </form>
             </div>
         </div>
