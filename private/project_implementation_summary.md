@@ -45,3 +45,15 @@ The frontend of the App Details page was updated to consume this new unified API
 
 ---
 *This completely automated system guarantees that TechilyFly always has up-to-date user reviews while maintaining 0-second loading times for 99% of visitors!*
+
+## 5. UI/UX Improvements
+- **App Details Page:** Centered the "Read More" buttons on mobile devices and made them fully responsive to stack nicely on smaller screens while remaining side-by-side on desktop.
+
+## 6. Admin Panel Enhancements
+- **App Duplication:** Added a "Duplicate" button in `admin/apps/index.php` that instantly copies an existing app, renames it with `(Copy)`, generates a unique slug, sets it to Draft, and redirects to the edit page.
+- **Admin Profile Management:** Created `admin/profile.php` and updated the `admins` table schema (added `email` and `phone`). Admins can now securely update their username, email, phone number, and password directly from the dashboard.
+- **Dynamic Stats:** Upgraded the "Total Downloads" card on the dashboard and the "Downloads" column in the apps table to use `calculate_dynamic_app_stats`, ensuring admin stats perfectly match the dynamic frontend figures.
+
+## 7. Codebase Cleanup
+- **Portfolio Removal:** Completely removed all traces of the "Portfolio" module from the header navigation, footer quick links, and static page routes (`page.php`), as requested.
+- **Temporary Files:** Deleted temporary schema update scripts (`alter_db.php` and `alter_db_indus.php`) to keep the root directory clean.
