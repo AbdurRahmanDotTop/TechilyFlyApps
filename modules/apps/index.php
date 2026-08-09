@@ -64,8 +64,8 @@ $apps = get_filtered_apps($pdo, $filters);
                             </div>
                         </div>
                         
-                        <p class="app-desc">
-                            <?= htmlspecialchars($app['description']) ?>
+                        <p class="app-desc" title="<?= htmlspecialchars($app['description']) ?>">
+                            <?= htmlspecialchars(get_excerpt($app['description'], 120)) ?>
                         </p>
                         
                         <div style="display: flex; gap: 10px;">

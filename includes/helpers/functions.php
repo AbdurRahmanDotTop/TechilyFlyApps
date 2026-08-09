@@ -8,6 +8,16 @@ function sanitize_input($data) {
     return $data;
 }
 
+function get_excerpt($text, $length = 150) {
+    // Strip markdown formatting simple approach
+    $text = preg_replace('/(#+\s+)|(\*\*)|(__)|(\*)|(_)|(~~)|(`+)|(\[.*?\]\(.*?\))/', '', $text);
+    $text = strip_tags($text);
+    if (mb_strlen($text) > $length) {
+        $text = mb_substr($text, 0, $length) . '...';
+    }
+    return $text;
+}
+
 function calculate_dynamic_app_stats($app) {
     // Calculate Rating (Average of Play Store and Indus Store if both exist, else the one that exists)
     $play_rating = (float)($app['play_store_rating'] ?? 0);
