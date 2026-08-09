@@ -48,7 +48,6 @@
                     <li><a href="<?= BASE_URL ?>index.php">Home</a></li>
                     <li><a href="<?= BASE_URL ?>modules/apps/index.php">Browse Apps</a></li>
                     <li><a href="<?= BASE_URL ?>services.php">Our Services</a></li>
-                    <li><a href="<?= BASE_URL ?>page.php/portfolio">Portfolio</a></li>
                     <li><a href="<?= BASE_URL ?>page.php/pricing">Pricing</a></li>
                 </ul>
             </div>

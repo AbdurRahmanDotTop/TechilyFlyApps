@@ -14,7 +14,6 @@ $titles = [
     'terms-conditions' => 'Terms & Conditions',
     'refund-policy' => 'Refund Policy',
     'faq' => 'Frequently Asked Questions',
-    'portfolio' => 'Our Portfolio',
     'pricing' => 'Pricing Plans'
 ];
 

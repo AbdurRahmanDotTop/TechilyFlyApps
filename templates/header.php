@@ -32,7 +32,6 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
             <a href="<?= BASE_URL ?>index.php" class="<?= $current_page == 'index' ? 'active' : '' ?>">Home</a>
             <a href="<?= BASE_URL ?>modules/apps/index.php" class="<?= $current_page == 'apps' || $current_page == 'details' ? 'active' : '' ?>">Apps</a>
             <a href="<?= BASE_URL ?>services.php" class="<?= $current_page == 'services' ? 'active' : '' ?>">Services</a>
-            <a href="<?= BASE_URL ?>page.php/portfolio" class="<?= $current_page == 'page' && ($_GET['slug'] ?? '') == 'portfolio' ? 'active' : '' ?>">Portfolio</a>
             <a href="<?= BASE_URL ?>contact.php" class="<?= $current_page == 'contact' ? 'active' : '' ?>">Contact</a>
         </nav>
 
