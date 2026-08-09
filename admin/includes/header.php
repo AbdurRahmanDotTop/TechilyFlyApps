@@ -64,6 +64,7 @@ try {
                     <?php endif; ?>
                 </a>
             </li>
+            <li><a href="<?= BASE_URL ?>admin/profile.php"><i class='bx bx-user'></i> Admin Profile</a></li>
             <li><a href="<?= BASE_URL ?>admin/settings.php"><i class='bx bx-cog'></i> Website Settings</a></li>
             <li><a href="<?= BASE_URL ?>admin/logout.php"><i class='bx bx-log-out'></i> Logout</a></li>
         </ul>
