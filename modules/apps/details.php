@@ -67,47 +67,8 @@ if (!$app) {
 
 <section class="section pt-0">
     <div class="container">
-        <div class="details-grid">
-            
-            <!-- Main Content -->
-            <div>
-                <?php if (!empty($app['banner_url'])): ?>
-                    <img src="<?= htmlspecialchars($app['banner_url']) ?>" alt="Banner" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 40px;">
-                <?php endif; ?>
-                
-                <h3 style="font-size: 1.8rem; margin-bottom: 20px;">About this app</h3>
-                <div style="color: var(--text-secondary); line-height: 1.8;">
-                    <?= nl2br(htmlspecialchars($app['description'])) ?>
-                </div>
-            </div>
-            
-            <!-- Sidebar -->
-            <div>
-                <div class="app-card" style="padding: 30px;">
-                    <h4 style="margin-bottom: 20px; font-size: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Requirements</h4>
-                    <p style="color: var(--text-secondary);">
-                        <?= nl2br(htmlspecialchars($app['requirements'] ?? 'No specific requirements listed.')) ?>
-                    </p>
-                    
-                    <h4 style="margin-top: 30px; margin-bottom: 20px; font-size: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Information</h4>
-                    <ul style="color: var(--text-secondary); line-height: 2;">
-                        <li><strong>Developer:</strong> <?= htmlspecialchars($app['developer']) ?></li>
-                        <li><strong>Category:</strong> <?= htmlspecialchars($app['category_name']) ?></li>
-                        <li><strong>Published On:</strong> <?= !empty($app['publish_date']) ? date('M d, Y', strtotime($app['publish_date'])) : 'N/A' ?></li>
-                        <li><strong>App Updated On:</strong> <?= !empty($app['app_update_date']) ? date('M d, Y', strtotime($app['app_update_date'])) : 'N/A' ?></li>
-                        <li><strong>Page Last Modified:</strong> <?= !empty($app['updated_at']) ? date('M d, Y g:i A', strtotime($app['updated_at'])) : date('M d, Y g:i A', strtotime($app['created_at'])) ?></li>
-                    </ul>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-</section>
-
-<section class="section pt-0">
-    <div class="container">
         <div class="reviews-section">
-            <h3 style="font-size: 1.8rem; margin-bottom: 20px;">User Reviews & Ratings</h3>
+            <h3 style="font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 20px;">User Reviews & Ratings</h3>
             
             <div id="reviews-container" class="reviews-carousel">
                 <div class="loading-reviews" style="padding: 20px; color: var(--text-secondary);">
@@ -126,6 +87,47 @@ if (!$app) {
         </div>
     </div>
 </section>
+
+<section class="section pt-0">
+    <div class="container">
+        <div class="details-grid">
+            
+            <!-- Main Content -->
+            <div>
+                <?php if (!empty($app['banner_url'])): ?>
+                    <img src="<?= htmlspecialchars($app['banner_url']) ?>" alt="Banner" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 40px;">
+                <?php endif; ?>
+                
+                <h3 style="font-size: clamp(1.4rem, 4vw, 1.8rem); margin-bottom: 20px;">About this app</h3>
+                <div style="color: var(--text-secondary); line-height: 1.8;">
+                    <?= nl2br(htmlspecialchars($app['description'])) ?>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div>
+                <div class="app-card" style="padding: 30px;">
+                    <h4 style="margin-bottom: 20px; font-size: clamp(1.1rem, 3vw, 1.2rem); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Requirements</h4>
+                    <p style="color: var(--text-secondary);">
+                        <?= nl2br(htmlspecialchars($app['requirements'] ?? 'No specific requirements listed.')) ?>
+                    </p>
+                    
+                    <h4 style="margin-top: 30px; margin-bottom: 20px; font-size: clamp(1.1rem, 3vw, 1.2rem); border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Information</h4>
+                    <ul style="color: var(--text-secondary); line-height: 2;">
+                        <li><strong>Developer:</strong> <?= htmlspecialchars($app['developer']) ?></li>
+                        <li><strong>Category:</strong> <?= htmlspecialchars($app['category_name']) ?></li>
+                        <li><strong>Published On:</strong> <?= !empty($app['publish_date']) ? date('M d, Y', strtotime($app['publish_date'])) : 'N/A' ?></li>
+                        <li><strong>App Updated On:</strong> <?= !empty($app['app_update_date']) ? date('M d, Y', strtotime($app['app_update_date'])) : 'N/A' ?></li>
+                        <li><strong>Page Last Modified:</strong> <?= !empty($app['updated_at']) ? date('M d, Y g:i A', strtotime($app['updated_at'])) : date('M d, Y g:i A', strtotime($app['created_at'])) ?></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
 
 <style>
 .reviews-carousel {
@@ -152,34 +154,38 @@ if (!$app) {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
-    padding: 20px;
-    min-width: 300px;
-    max-width: 350px;
+    padding: 25px;
+    min-width: 320px;
+    width: clamp(320px, 45vw, 500px);
     flex-shrink: 0;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 .reviewer-name {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-weight: 700;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: var(--text-color);
 }
 .review-rating {
     color: var(--warning);
-    font-size: 1.2rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.25rem);
 }
 .review-text {
     color: var(--text-secondary);
     line-height: 1.6;
     flex-grow: 1;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
 }
 .review-footer {
     display: flex;
